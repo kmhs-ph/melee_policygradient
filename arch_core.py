@@ -3,7 +3,7 @@ from melee import enums
 import numpy as np
 from melee_env.agents.util import *
 import code
-
+import threading
 import torch
 import torch.nn.functional as F
 import torch.nn as nn
@@ -135,17 +135,28 @@ class Model(nn.Module):
         self.probs.append(prob)
 
     def train_net(self):
+        print("train has been started")
+        self.training_ended = False
         R = torch.stack(self.Rt[:-1])
         prob = torch.stack(self.probs[:-1])
 
         self.optimizer.zero_grad()
         loss = -torch.sum(torch.log(prob) * R)
-        print(loss)
         loss.backward(retain_graph = True)
         self.optimizer.step()
 
         self.Rt = []
         self.probs = []
+
+    def train_while_stepping(self, step):
+        # Start thread for function a
+        train = threading.Thread(target=self.train_net)
+        train.start()
+        while train.is_alive():
+            step()
+        # Wait for thread a to finish
+        train.join()
+        
 
     
 class Agent(ABC):

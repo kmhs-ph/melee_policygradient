@@ -143,9 +143,6 @@ class MeleeEnv:
 
 
     def close(self):
-        for t, c in self.controllers.items():
-            c.disconnect()
-        self.observation_space._reset()
         self.gamestate = None
         self.console.stop()
         time.sleep(2) 

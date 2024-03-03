@@ -47,7 +47,7 @@ for episode in range(episodes):
         score += float(r)
 
         gamestate, done = env.step()
-    AGENT.net.train_net()
+    AGENT.net.train_while_stepping(env.console.step)
     
     save_path = SAVE_PATH + ".pth"
     print('Save model state_dict to', save_path)

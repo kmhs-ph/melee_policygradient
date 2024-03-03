@@ -1,5 +1,5 @@
-run.py: run and train a policy graient agent.
+run.py: run and train policy gradient agent
 
-arch_core.py: architecture of the agent.
+arch_core: architecture of the agent
 
 you need a .iso file to run the game.

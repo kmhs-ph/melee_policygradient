@@ -98,8 +98,15 @@ class MeleeEnv:
             
         while True:
             self.gamestate = self.console.step()
+            gamestate=self.gamestate
+            controller=self.players[self.menu_control_agent].controller
+            try:
+                print(gamestate.players[controller.port].cursor.x, gamestate.players[controller.port].cursor.y)
+            except:
+                pass
             
             if self.gamestate.menu_state is melee.Menu.CHARACTER_SELECT:
+                print("selecting character...")
                 for i in range(len(self.players)):
                     if self.players[i].agent_type == "AI":
                         melee.MenuHelper.choose_character(
@@ -117,9 +124,10 @@ class MeleeEnv:
                             costume=i,
                             swag=False,
                             cpu_level=self.players[i].lvl,
-                            start=self.players[i].press_start)  
+                            start=self.players[i].press_start)
 
             elif self.gamestate.menu_state is melee.Menu.STAGE_SELECT:
+                print("selecting stage...")
                 melee.MenuHelper.choose_stage(
                     stage=stage,
                     gamestate=self.gamestate,

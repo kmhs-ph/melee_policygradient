@@ -53,13 +53,12 @@ for episode in range(episodes):
     print('Save model state_dict to', save_path)
     torch.save(AGENT.net.state_dict(), save_path)
 
-    if episode % print_interval == 0 and episode != 0:
-        print("# of episode :{}, avg score : {}".format(
-            episode, score/print_interval))
+    if (episode + 1) % print_interval == 0:
+        print("# of episode :{}, avg score : {}".format(episode + 1, score/print_interval))
 
-        # 성공 조건 설정
         if score/print_interval > 500:
             print("Congratulations! solved :)")
             break
 
         score = 0.0
+env.close()

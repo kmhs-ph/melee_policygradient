@@ -147,9 +147,11 @@ class Model(nn.Module):
 
         self.Rt = []
         self.probs = []
+        loss = 0
+        self.core.hidden_state = None
 
     def train_while_stepping(self, step):
-        # Start thread for function a
+        # Start thread for training
         train = threading.Thread(target=self.train_net)
         train.start()
         while train.is_alive():
@@ -165,7 +167,7 @@ class Agent(ABC):
         self.controller = None
         self.port = None  # this is also in controller, maybe redundant?
         self.action = 0
-        self.press_start = True
+        self.press_start = False
         self.self_observation = None
         self.current_frame = 0
 
